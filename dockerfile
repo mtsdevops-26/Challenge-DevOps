@@ -1,9 +1,17 @@
-FROM python:3.8.5-alpine
-RUN pip install --upgrade pip
-COPY ./requirements.txt .
+FROM python:3.10-alpine
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+WORKDIR /code
+COPY requirements.txt /code/
 RUN pip install -r requirements.txt
-COPY . .
-WORKDIR /app
-COPY ./boot.sh /
-ENTRYPOINT ["sh", "/boot.sh"]
+COPY . /code/
+
 EXPOSE 8000
+
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+
+
+
+# python manage.py migrate
+# python manage.py createsuperuser
