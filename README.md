@@ -1,4 +1,4 @@
-# Challenge-DevOps
+# challenge-devops
 
 Precisamos fazer o deploy de uma aplicação na nuvem através de um container docker.
 
