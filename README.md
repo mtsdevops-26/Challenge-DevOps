@@ -1,5 +1,16 @@
 # challenge-devops
 
+
+Rápida descrição do objetivo de fazer esse projeto
+
+| :placard: Vitrine.Dev |     |
+| -------------  | --- |
+| :sparkles: Nome        | **Challenge-DevOps**
+| :label: Tecnologias | Python, shell, # (tecnologias utilizadas)
+| :rocket: URL         | https://www.alura.com.br/challenges/devops/semana-01-criando-containers
+| :fire: Desafio     | https://url-do-desafio.com.br
+
+
 Precisamos fazer o deploy de uma aplicação na nuvem através de um container docker.
 
 Para realizar o deploy da aplicação será usado um container Docker, precisaremos desenvolver um dockerfile, colocar o container criado em um repositório, e posteriormente em um provedor cloud. Por fim, vamos automatizar o processo de criação e deploy usando rotinas de CI e CD.
