@@ -1,0 +1,65 @@
+name: Entrega continua
+
+on:
+  workflow_call:
+
+jobs:
+
+  EC2:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Download a Build Artifact
+      uses: actions/download-artifact@v3.0.0
+      with:
+        # Artifact name
+        name: programa
+    
+    - name: ssh deploy
+      # You may pin to the exact commit or the version.
+      # uses: easingthemes/ssh-deploy@c711f2c3391cac2876bf4c833590077f02e4bcb8
+      uses: easingthemes/ssh-deploy@v2.2.11
+      with:
+        # Private Key
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        # Remote host
+        REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+        # Remote user
+        REMOTE_USER: ${{ secrets.REMOTE_USER }}
+        TARGET: /home/${{ secrets.REMOTE_USER }}
+    
+#    - name: SSH Execute Commands
+      # You may pin to the exact commit or the version.
+      # uses: JimCronqvist/action-ssh@1c03e01b4ac39da814b45cfd2924c2df0ff1396f
+#      uses: JimCronqvist/action-ssh@0.1.1
+#      with:
+       # Command(s) to execute on the remote server.
+#        command: |
+#          chmod +x main 
+#          export HOST='database-1.chpsm599tfcr.us-east-1.rds.amazonaws.com'
+#          export DBPORT=5432
+#          export PORT=8080
+#          export USER=postgres
+#          export PASSWORD=12345678
+#          export DBNAME=postgres
+#          nohup ./main &
+        # Hostname or IP address of the remote server(s). Separate multiple servers with a blank space. Example: 'user@mydomain.com:22 user@otherdomain.com:2222'
+#        hosts: 'ec2-user@${{ secrets.REMOTE_HOST }}'
+        # The private key (id_rsa) content for authenticating to the SSH server(s). Recommended to store it as a GitHub Secret.
+#        privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
+    - name: executing remote ssh commands
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        username: ${{ secrets.REMOTE_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+        script: |
+          chmod +x main 
+          export HOST=${{ secrets.DBHOST }}
+          export DBPORT=${{ secrets.DBPORT }}
+          export PORT=8080
+          export USER=${{ secrets.DBUSER }}
+          export PASSWORD=${{ secrets.DBPASSWORD }}
+          export DBNAME=${{ secrets.DBNAME }}
+          nohup ./main > nohup.out 2> nohup.err < /dev/null &
